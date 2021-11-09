@@ -1,4 +1,5 @@
-### MariaDB SQL 쿼리 - 
+### MariaDB SQL 쿼리 - SELECT
+
 DB목록 조회
 
 ```mariadb
@@ -153,7 +154,7 @@ HAVING SUM(수량열*가격열) > 1000;
 
 
 
-MariaDB SQL 쿼리 - INSERT, UPDATE, DELETE
+### MariaDB SQL 쿼리 - INSERT, UPDATE, DELETE
 
 INSERT 기본형식
 
