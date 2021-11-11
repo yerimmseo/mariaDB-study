@@ -2,7 +2,7 @@
 
 DB목록 조회
 
-```mariadb
+```mysql
 SHOW DATABASE;
 ```
 
