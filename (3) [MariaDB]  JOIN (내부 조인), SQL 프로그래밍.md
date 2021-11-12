@@ -10,7 +10,11 @@ N:1의 관계인 테이블1:테이블2를 인용하는 조건
 
 ```mysql
 USE 주문판매DB;
-SELECT * FROM 주문테이블명 INNER JOIN 개인정보테이블명 ON 주문테이블명.userID(외래키) = 개인정보테이블명.userID(기본키) WHERE 주문테이블명.userID = '주문자ID';
+SELECT * 
+	FROM 주문테이블명 
+		INNER JOIN 개인정보테이블명 
+			ON 주문테이블명.userID(외래키) = 개인정보테이블명.userID(기본키) 
+	WHERE 주문테이블명.userID = '주문자ID';
 ```
 
 
@@ -19,7 +23,11 @@ SELECT * FROM 주문테이블명 INNER JOIN 개인정보테이블명 ON 주문�
 
 ```mysql
 USE 주문판매DB;
-SELECT 주문테이블명.userID, 주소 FROM 주문테이블명 INNER JOIN 개인정보테이블명 ON 주문테이블명.userID(외래키) = 개인정보테이블명.userID(기본키) WHERE 주문테이블명.userID = '주문자ID';
+SELECT 주문테이블명.userID, 주소 
+	FROM 주문테이블명 
+		INNER JOIN 개인정보테이블명 
+			ON 주문테이블명.userID(외래키) = 개인정보테이블명.userID(기본키) 
+	WHERE 주문테이블명.userID = '주문자ID';
 ```
 
 
@@ -28,7 +36,11 @@ SELECT 주문테이블명.userID, 주소 FROM 주문테이블명 INNER JOIN 개�
 
 ```mysql
 USE 주문판매DB;
-SELECT B.userID, U.주소 FROM 주문테이블명 B INNER JOIN 개인정보테이블명 U ON B.userID(외래키) = U.userID(기본키) WHERE 주문테이블명.userID = '주문자ID';
+SELECT B.userID, U.주소 
+	FROM 주문테이블명 B 
+		INNER JOIN 개인정보테이블명 U 
+			ON B.userID(외래키) = U.userID(기본키) 
+	WHERE 주문테이블명.userID = '주문자ID';
 ```
 
 
@@ -41,7 +53,11 @@ SELECT B.userID, U.주소 FROM 주문테이블명 B INNER JOIN 개인정보테�
 
 ```mysql
 USE 주문판매DB;
-SELECT * FROM 개인정보테이블명 LEFT OUTER JOIN 주문테이블명 ON 개인정보테이블.userID(기본키) = 주문테이블명.userID(외래키) ORDER BY 개인정보테이블.userID;
+SELECT * 
+	FROM 개인정보테이블명 
+		LEFT OUTER JOIN 주문테이블명 
+			ON 개인정보테이블.userID(기본키) = 주문테이블명.userID(외래키) 
+	ORDER BY 개인정보테이블.userID;
 ```
 
 
@@ -70,7 +86,10 @@ SELECT * FROM 테이블1 CROSS JOIN 테이블2;
 내부 조인을 이용해서 만들지만 별칭을 달리하여 다른 행들의 열 값을 SELECT 해서 가져옴
 
 ```mysql
-SELECT A.본인이름, A.상사이름, B.상사이름 AS '상사의 상사이름' FROM 중대원테이블A INNER JOIN 중대원테이블B ON A.상관이름 = B.본인이름 WHERE A.본인이름 = '이름명';
+SELECT A.본인이름, A.상사이름, B.상사이름 AS '상사의 상사이름' 
+	FROM 중대원테이블A 
+		INNER JOIN 중대원테이블B ON A.상관이름 = B.본인이름 
+	WHERE A.본인이름 = '이름명';
 ```
 
 
@@ -85,7 +104,9 @@ UNION은 중복된 열 제거, UNION ALL은 중복된 열까지 모두 출력
 
 ```mysql
 USE DB명;
-SELECT 열이름1, 열이름2 FROM 테이블1 UNION ALL SELECT 열이름1, 열이름2 FROM 테이블2;
+SELECT 열이름1, 열이름2 FROM 테이블1 
+	UNION ALL 
+SELECT 열이름1, 열이름2 FROM 테이블2;
 ```
 
 
@@ -97,14 +118,16 @@ SELECT 열이름1, 열이름2 FROM 테이블1 UNION ALL SELECT 열이름1, 열�
 NOT IN은 첫번째 쿼리 결과 중에서 두번째 쿼리에 해당하는 행을 제외하고 출력
 
 ```mysql
-SELECT * FROM 개인정보테이블 WHERE 이름열 NOT IN (SELECT 이름열 FROM 개인정보테이블 WHERE 모바일열 IS NULL);
+SELECT * FROM 개인정보테이블 
+	WHERE 이름열 NOT IN (SELECT 이름열 FROM 개인정보테이블 WHERE 모바일열 IS NULL);
 -- 개인정보테이블의 이름열 중에 모바일열이 NULL인 이름열들은 제외
 ```
 
 IN은 첫번째 쿼리 결과 중에서 두번째 쿼리에 해당하는 행들만 출력
 
 ```mysql
-SELECT * FROM 개인정보테이블 WHERE 이름열 IN (SELECT 이름열 FROM 개인정보테이블 WHERE 모바일열 IS NULL);
+SELECT * FROM 개인정보테이블 
+	WHERE 이름열 IN (SELECT 이름열 FROM 개인정보테이블 WHERE 모바일열 IS NULL);
 -- 개인정보테이블의 이름열 중에 모바일열이 NULL인 이름열들만 출력
 ```
 
@@ -139,12 +162,12 @@ CALL ifProc(); -- 프로시저 호출하여 결과값 '100입니다.'출력
 * DELIMITER : C나 JAVA의 세미콜론(;), 문법의 끝을 나타내는 역할. 구문 문자를 정의하는 기능을 함
   DELIMITER 명령어 뒤에 구문 문자로 사용하고자 하는 문자를 넣어주면 됨
 
-  ```mariadb
+  ```mysql
   DELIMITER $$
   SELECT * FROM account $$
   ```
 
-  ```mariadb
+  ```mysql
   DELIMITER $$
   CREATE PROCEDURE insert_test()
   BEGIN
@@ -352,40 +375,3 @@ DEALLOCATE PREPARE 쿼리명; -- 쿼리명 해제
 
 SELECT * FROM 테이블명;
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
