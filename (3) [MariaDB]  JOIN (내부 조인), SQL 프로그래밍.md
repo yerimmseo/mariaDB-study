@@ -8,7 +8,7 @@ N:1의 관계인 테이블1:테이블2를 인용하는 조건
 
 예) 테이블1= 주문테이블, 테이블2= 개인정보(주소)테이블, 테이블1에 테이블2를 JOIN하여 주문자의 주소를 알아내는 기능을 함
 
-```mariadb
+```mysql
 USE 주문판매DB;
 SELECT * FROM 주문테이블명 INNER JOIN 개인정보테이블명 ON 주문테이블명.userID(외래키) = 개인정보테이블명.userID(기본키) WHERE 주문테이블명.userID = '주문자ID';
 ```
@@ -17,7 +17,7 @@ SELECT * FROM 주문테이블명 INNER JOIN 개인정보테이블명 ON 주문�
 
 전체를 SELECT 하지 않고 일부만 SELECT 하고자 할 경우는 어떤 테이블의 열이름인지 확실히 해주어야 함
 
-```mariadb
+```mysql
 USE 주문판매DB;
 SELECT 주문테이블명.userID, 주소 FROM 주문테이블명 INNER JOIN 개인정보테이블명 ON 주문테이블명.userID(외래키) = 개인정보테이블명.userID(기본키) WHERE 주문테이블명.userID = '주문자ID';
 ```
@@ -26,7 +26,7 @@ SELECT 주문테이블명.userID, 주소 FROM 주문테이블명 INNER JOIN 개�
 
 각 테이블을 별칭으로 만들어 사용 가능
 
-```mariadb
+```mysql
 USE 주문판매DB;
 SELECT B.userID, U.주소 FROM 주문테이블명 B INNER JOIN 개인정보테이블명 U ON B.userID(외래키) = U.userID(기본키) WHERE 주문테이블명.userID = '주문자ID';
 ```
@@ -39,7 +39,7 @@ SELECT B.userID, U.주소 FROM 주문테이블명 B INNER JOIN 개인정보테�
 
 외부 조인은 테이블1의 모든 행이 조회됨. 주문내역이 없는 개인정보테이블의 행까지 조회됨
 
-```mariadb
+```mysql
 USE 주문판매DB;
 SELECT * FROM 개인정보테이블명 LEFT OUTER JOIN 주문테이블명 ON 개인정보테이블.userID(기본키) = 주문테이블명.userID(외래키) ORDER BY 개인정보테이블.userID;
 ```
@@ -56,7 +56,7 @@ SELECT * FROM 개인정보테이블명 LEFT OUTER JOIN 주문테이블명 ON 개
 
 보통 큰 샘플 데이터를 생성하고자 할 때 사용하는 조인
 
-```mariadb
+```mysql
 USE 주문판매DB;
 SELECT * FROM 테이블1 CROSS JOIN 테이블2;
 ```
@@ -69,7 +69,7 @@ SELECT * FROM 테이블1 CROSS JOIN 테이블2;
 
 내부 조인을 이용해서 만들지만 별칭을 달리하여 다른 행들의 열 값을 SELECT 해서 가져옴
 
-```mariadb
+```mysql
 SELECT A.본인이름, A.상사이름, B.상사이름 AS '상사의 상사이름' FROM 중대원테이블A INNER JOIN 중대원테이블B ON A.상관이름 = B.본인이름 WHERE A.본인이름 = '이름명';
 ```
 
@@ -83,7 +83,7 @@ SELECT A.본인이름, A.상사이름, B.상사이름 AS '상사의 상사이름
 
 UNION은 중복된 열 제거, UNION ALL은 중복된 열까지 모두 출력
 
-```mariadb
+```mysql
 USE DB명;
 SELECT 열이름1, 열이름2 FROM 테이블1 UNION ALL SELECT 열이름1, 열이름2 FROM 테이블2;
 ```
@@ -96,14 +96,14 @@ SELECT 열이름1, 열이름2 FROM 테이블1 UNION ALL SELECT 열이름1, 열�
 
 NOT IN은 첫번째 쿼리 결과 중에서 두번째 쿼리에 해당하는 행을 제외하고 출력
 
-```mariadb
+```mysql
 SELECT * FROM 개인정보테이블 WHERE 이름열 NOT IN (SELECT 이름열 FROM 개인정보테이블 WHERE 모바일열 IS NULL);
 -- 개인정보테이블의 이름열 중에 모바일열이 NULL인 이름열들은 제외
 ```
 
 IN은 첫번째 쿼리 결과 중에서 두번째 쿼리에 해당하는 행들만 출력
 
-```mariadb
+```mysql
 SELECT * FROM 개인정보테이블 WHERE 이름열 IN (SELECT 이름열 FROM 개인정보테이블 WHERE 모바일열 IS NULL);
 -- 개인정보테이블의 이름열 중에 모바일열이 NULL인 이름열들만 출력
 ```
@@ -118,7 +118,7 @@ SELECT * FROM 개인정보테이블 WHERE 이름열 IN (SELECT 이름열 FROM �
 
 > #### IF ELSE
 
-```mariadb
+```mysql
 DROP PROCEDURE IF EXISTS ifProc; -- 기존에 프로시저가 존재한다면 삭제
 DELIMITER $$
 CREATE PROCEDURE ifProc(); -- ifProc() 프로시저 생성
@@ -167,7 +167,7 @@ CALL ifProc(); -- 프로시저 호출하여 결과값 '100입니다.'출력
 
 > #### IF ELSEIF ELSE
 
-```mariadb
+```mysql
 DROP PROCEDURE IF EXISTS ifProc();
 DELIMITER $$
 CREATE PROCEDURE ifProc();
@@ -199,7 +199,7 @@ CALL ifProc();
 
 > #### CASE
 
-```mariadb
+```mysql
 DROP PROCEDURE IF EXISTS caseProc();
 DELIMITER $$
 CREATE PROCEDURE caseProc()
@@ -232,7 +232,7 @@ CALL caseProc();
 
 > #### WHILE
 
-```mariadb
+```mysql
 DROP PROCEDURE IF EXISTS whileProc();
 DELIMITER $$
 CREATE PROCEDURE whileProc()
@@ -259,7 +259,7 @@ CALL whilProc();
 
 > #### WHILE INTERATE / LEAVE
 
-```mariadb
+```mysql
 DROP PROCEDURE IF EXISTS whileProc();
 DELIMITER $$
 CREATE PROCEDURE whileProc()
@@ -296,7 +296,7 @@ CALL whileProc();
 
 > #### 오류처리 (DECLARE CONTINUE HANDLER FOR 에러코드 에러시작업내역;)
 
-```mariadb
+```mysql
 DROP PROCEDURE IF EXISTS errorProc();
 DELIMITER $$
 CREATE PROCEDURE errorProc()
@@ -332,14 +332,14 @@ CALL errorProc(); -- '오류발생. 롤백합니다.' 출력 및 오류 메세�
 
 > #### 동적SQL (PREPARE / EXECUTE / DEALLOCATE PREPARE)
 
-```mariadb
+```mysql
 USE DB명;
 PREPARE 쿼리명 FROM 'SELECT * FROM 테이블'; -- SELECT 문을 '쿼리명'으로 준비시킴
 EXECUTE 쿼리명;
 DEALLOCATE PREPARE 쿼리명; -- '쿼리명'의 준비를 해제시킴
 ```
 
-```mariadb
+```mysql
 USE DB명;
 DROP TABLE IF EXISTS 테이블명; -- 테이블이 존재한다면 지워줌
 CREATE TABLE 테이블명 (id INT AUTO_INCREMENT PRIMARY KEY, mDate DATETIME);
