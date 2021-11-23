@@ -1,93 +1,121 @@
-### MariaDB SQL 쿼리 - SELECT
+## MariaDB SQL 쿼리 - SELECT
 
-DB목록 조회
+- DB목록 조회
 
 ```mysql
 SHOW DATABASE;
 ```
 
-DB선택
+
+
+- DB선택
 
 ```mysql
 USE DB명;
 ```
 
-선택된 DB에 존재하는 테이블 정보 조회
+
+
+- 선택된 DB에 존재하는 테이블 정보 조회
 
 ```mysql
 SHOW TABLE STATUS; -- 테이블 이름만 간한히 볼 때는 SHOW TABLES;
 ```
 
-테이블 조회(SELECT)
+
+
+- 테이블 조회(SELECT)
 
 ```mysql
 SELECT * FROM 테이블명;
 ```
 
-DB선택과 함께 테이블 조회
+
+
+- DB선택과 함께 테이블 조회
 
 ```mysql
 SELECT * FROM DB명.테이블명;
 ```
 
-테이블에서 필요한 열만 조회
+
+
+- 테이블에서 필요한 열만 조회
 
 ```mysql
 SELECT 열이름1, 열이름2, 열이름3 FROM 테이블명;
 ```
 
-별칭 사용법(AS)
+
+
+- 별칭 사용법(AS)
 
 ```mysql
 SELECT * 열이름1 AS 별칭1, 열이름2 AS 별칭2 FROM 테이블명; 
 ```
 
-조건절 AND, OR
+
+
+- 조건절 AND, OR
 
 ```mysql
 SELECT * FROM 테이블명 WHERE 조건1 AND 조건2;
 SELECT * FROM 테이블명 WHERE 조건1 OR 조건2;
 ```
 
-조건절 BETWEEN...AND
+
+
+- 조건절 BETWEEN...AND
 
 ```mysql
 SELECT * FROM 테이블명 WHERE 열이름 BETWEEN 시작값 AND 끝값;
 ```
 
-조건절 IN('값1', '값2', ...)
+
+
+- 조건절 IN('값1', '값2', ...)
 
 ```mysql
 SELECT * FROM 테이블명 WHERE 열이름 IN ('값1', '값2', '값3');
 ```
 
-조건절 LIKE '%'
+
+
+- 조건절 LIKE '%'
 
 ```mysql
 SELECT * FROM 테이블명 WHERE 열이름 LIKE '김%'
 ```
 
-순서정렬 (ORDER BY)
+
+
+- 순서정렬 (ORDER BY)
 
 ```mysql
 SELECT * FROM 테이블명 ORDER BY 열이름; -- 기본값이 ASC이며 열이름 기준 오름차순 정렬
 SELECT * FROM 테이블명 ORDER BY 열이름 DESC;
 ```
 
-중복제거 조회 (DISTINCT)
+
+
+- 중복제거 조회 (DISTINCT)
 
 ```mysql
 SELECT 지역명 FROM 동창회테이블;
 SELECT DISTICT 지역명 FROM 동창회테이블; -- 조회하는 지역명 중 중복되는 값은 1개만 조회
 ```
 
-조회(출력) 갯수 제한(LIMIT)
+
+
+- 조회(출력) 갯수 제한(LIMIT)
 
 ```mysql
 SELECT * FROM 테이블명 LIMIT 5; -- 5개 행까지만 조회
 ```
 
-테이블 새이름으로 복사하기
+
+
+- 테이블 새이름으로 복사하기
 
 ```mysql
 /* DB명 안에 있는 기존테이블을 새 테이블로 복사 */
@@ -95,7 +123,9 @@ USE 테이블명;
 CREATE TABLE 새테이블이름 (SELECT 복사할열1, 복사할열2 FROM 기존테이블);
 ```
 
-GROUP BY절
+
+
+- GROUP BY절
 
 ```mysql
 /* 그룹열을 중복제거 및 조회하고 그룹열에 해당되는 합칠열 값을 모두 더해서(SUM) 출력 */
@@ -106,7 +136,7 @@ SELECT 그룹열, SUM(수량열*가격열) FROM 테이블명 GROUP BY 그룹열;
 SELECT name, test, score FROM student_tests ORDER BY score DESC;
 ```
 
-GROUP BY절과 함께 사용되는 집계함수
+- GROUP BY절과 함께 사용되는 집계함수
 
 |     함수명      |                 설명                  |
 | :-------------: | :-----------------------------------: |
@@ -137,7 +167,9 @@ SELECT AVG(a) FROM t1;
 SELECT name, MAX(score) FROM student_tests GROUP BY name;
 ```
 
-HAVING 절 (GROUP BY의 조건절)
+
+
+- HAVING 절 (GROUP BY의 조건절)
 
 ```mysql
 /* 그룹열 중복제거, 그룹열에 해당하는 합칠열 값을 모두 더한값(SUM)이 1000보다 큰 행들을 출력 */
@@ -154,9 +186,11 @@ HAVING SUM(수량열*가격열) > 1000;
 
 
 
-### MariaDB SQL 쿼리 - INSERT, UPDATE, DELETE
 
-INSERT 기본형식
+
+## MariaDB SQL 쿼리 - INSERT, UPDATE, DELETE
+
+- INSERT 기본형식
 
 ```mysql
 USE DB명;
@@ -170,7 +204,9 @@ INSERT INTO 테이블명(열이름1, 열이름2) VALUES (2, '박서왕');
 INSERT INTO 테이블명(열이름3, 열이름1, 열이름2) VALUES (40, 3, '이전심'); 
 ```
 
-AUTO_INCREMENT(순서열 같은 경우 자동으로 1부터 증가된 값을 입력해주는 기능)
+
+
+- AUTO_INCREMENT(순서열 같은 경우 자동으로 1부터 증가된 값을 입력해주는 기능)
 
 ```mysql
 USE DB명;
@@ -204,7 +240,9 @@ SELECT * FROM student_details;
 +----+---------+---------------+
 ```
 
-다른 테이블의 조회값을 INSERT 하기
+
+
+- 다른 테이블의 조회값을 INSERT 하기
 
 ```mysql
 USE DB명;
@@ -214,7 +252,9 @@ INSERT INTO 테이블명
   FROM 조회DB.조회테이블;
 ```
 
-UPDATE (데이터 수정)
+
+
+- UPDATE (데이터 수정)
 
 ```mysql
 USE DB명;
@@ -224,7 +264,9 @@ UPDATE 테이블명 SET 열이름 = 바꿀값 WHERE 조건문;
 UPDATE 테이블명 SET 가격열 = 가격열 * 10; -- 가격열의 모든 값을 10을 곱하여 변경
 ```
 
-조건부 데이터 입력(INSERT), 변경(UPDATE)
+
+
+- 조건부 데이터 입력(INSERT), 변경(UPDATE)
 
 ```mysql
 INSERT INTO 테이블명 VALUES ('값1', '값2', '값3') -- 값1,2,3을 테이블에 입력
@@ -232,7 +274,9 @@ INSERT INTO 테이블명 VALUES ('값1', '값2', '값3') -- 값1,2,3을 테이�
 	/* 만약 기본키가 중복되면 열이름2를 값2로, 열이름3을 값3으로 업데이트 */
 ```
 
-DELETE FORM (행단위 삭제)
+
+
+- DELETE FORM (행단위 삭제)
 
 ```mysql
 USE DB명;
@@ -242,7 +286,9 @@ DELETE FROM 테이블명 WHERE 조건문;
 DELETE FROM 테이블명 WHERE 이름열 = '김이박'; -- 이름열 값이 김이박인 행들 모두 삭제
 ```
 
-DELETE, DROP, TRUNCATE 차이
+
+
+- DELETE, DROP, TRUNCATE 차이
 
 ```mysql
 DELETE FROM 테이블명;    -- DML: 트랜젝션 로그를 기록하여 느림. 테이블 모든 행 삭제
