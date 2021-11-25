@@ -1,4 +1,4 @@
-### MariaDB SQL 쿼리 - 데이터 형식
+## MariaDB SQL 쿼리 - 데이터 형식
 
 > 숫자 데이터 형식
 
@@ -13,6 +13,8 @@
 | FLOAT                              | 4         | -3.40E+38~-1.17E-38     | 소수점 아래 7자리까지 표현                                   |
 | DOUBLE<br />REAL                   | 8         | -1.22E-308~1.79E-308    | 소수점 아래 15자리까지 표현                                  |
 | DECIMAL(m,[d])<br />NUMERIC(m,[d]) | 5~17      | -10의 38승+1~10의38승-1 | 전체 자릿수(m)와 소숫점 이하 자릿수(d)를 가진 숫자형<br />예) DECIMAL(5, 2)는 전체 자릿수 5, 그 중 소수점 이하는 2자리 |
+
+
 
 > 문자 데이터 형식
 
@@ -33,6 +35,8 @@
 | ENUM(값들...) | 1 또는 2      | 최대 655535개의 열거형 데이터 값                             |
 | SET(값들...)  | 1, 2, 3, 4, 8 | 최대 64개의 서로 다른 데이터 값                              |
 
+
+
 > 날짜와 시간 데이터 형식
 
 | 데이터 형식 | 바이트 수 | 설명                                                         |
@@ -45,7 +49,7 @@
 
 예시)
 
-```mariadb
+```mysql
 SELECT CAST ('2020-10-19 12:35:29.123' AS DATE) AS 'DATE';
 SELECT CAST ('2020-10-19 12:35:29.123' AS TIME) AS 'TIME';
 SELECT CAST ('2020-10-19 12:35:29.123' AS DATETIME) AS 'DATETIME';
@@ -64,11 +68,11 @@ DATE		TIME	DATETIME
 
 
 
-MariaDB SQL 쿼리 - 변수 사용 및 데이터 형 변환
+## MariaDB SQL 쿼리 - 변수 사용 및 데이터 형 변환
 
-변수의 사용
+- 변수의 사용
 
-```mariadb
+```mysql
 SET @변수이름 = 변수의 값; -- 변수의 선언 및 값 대입
 SELECT @변수이름; -- 변수의 값 출력
 
@@ -85,18 +89,22 @@ SELECT @변수명2 + @변수명3; -- 정수+실수 = 실수
 SELECT @변수명4, 지역명열이름 FROM 테이블명; -- 1열은 '지역명-->', 2열은 테이블의 지역명 내용 출력
 ```
 
-LIMIT에 변수 사용방법(기본적으로 변수 사용 불가능하나 PREPARE와 EXECUTE문을 활용해서 사용 가능)
 
-```mariadb
+
+- LIMIT에 변수 사용방법(기본적으로 변수 사용 불가능하나 PREPARE와 EXECUTE문을 활용해서 사용 가능)
+
+```mysql
 SET @변수1 = 5;
 PREPARE 쿼리이름
 	FROM 'SELECT 열이름1, 열이름2 FROM 테이블명 ORDER BY 열이름1 LIMIT ?'; -- ?에 값이 입력됨
 EXECUTE 쿼리이름 USING @변수1; -- 여기서 ?에 @변수1의 값을 대입
 ```
 
-데이터 형 변환
 
-```mariadb
+
+- 데이터 형 변환
+
+```mysql
 -- 데이터 형 변환 방식1 CAST
 CAST (expression AS 데이터형식 [(길이)])
 
@@ -124,24 +132,35 @@ SELECT 0 = 'mega2'; -- 문자는 0으로 변환됨
 
 
 
-MariaDB SQL 쿼리 - 내장 함수
+
+
+## MariaDB SQL 쿼리 - 내장 함수
 
 > 제어 흐름 함수
 
-```mariadb
-/* IF(수식, 참, 거짓)
- * 수식이 참이면 2번째 값 출력, 거짓이면 3번째 값 출력 */
-SELECT IF (100>200, '참', '거짓'); -- 거짓이 출력
+- IF (수식, 참, 거짓)
 
-/* IFNULL(수식1, 수식2) 
- * 수식1값이 NULL이면 수식2가 반환, NULL이 아니면 수식1이 반환 */
-SELECT IFNULL(NULL, '널'), IFNULL(100, '널') -- 앞의 값은 NULL이라 '널', 뒤의 값은 100 반환
- 
-/* NULLIF(수식1, 수식2) 
- * 수식1과 수식2가 같으면 NULL을 반환, 다르면 수식1을 반환 */
+```mysql
+-- 수식이 참이면 2번째 값 출력, 거짓이면 3번째 값 출력
+SELECT IF (100 > 200, '참', '거짓'); -- 거짓이 출력
+```
+
+- IF NULL (수식1, 수식2)
+
+```mysql
+-- 수식1값이 NULL이면 수식2가 반환, NULL이 아니면 수식1이 반환
+SELECT IFNULL(NULL, '널'), IFNULL(100, '널'); -- 앞의 값은 NULL이라 '널', 뒤의 값은 100 반환
+```
+
+- NULLIF (수식1, 수식2)
+
+```mysql
 SELECT NULLIF(100, 100), NULLIF(200, 100); -- 앞의 값은 같아서 NULL, 뒤의 값은 200 반환
+```
 
-/* CASE~WHEN~ELSE~END */
+- CASE~WHEN~ELSE~END
+
+```mysql
 SELECT	CASE 10 -- CASE 값이 10일 때
 		WHEN 1 THEN '일'
 		WHEN 5 THEN '오'
@@ -150,30 +169,38 @@ SELECT	CASE 10 -- CASE 값이 10일 때
 	END;
 ```
 
+
+
+
+
 > 문자열 함수
 
-```mariadb
-/* ASCII(아스키코드), CHAR(숫자) */
+- ASCII (아스키코드), CHAR(숫자)
+
+```mysql
 SELECT ASCII('A'), CHAR(65); -- 65 출력, 'A' 출력
 ```
 
-```mariadb
-/* BIT_LENGTH(문자열), CHAR_LENGTH(문자열), LENGTH(문자열)
-BIT_할당된 Bit크기, 또는 문자 크기를 반환
+- BIT_LENGTH(문자열), CHAR_LENGTH(문자열), LENGTH(문자열)
+
+```mysql
+/* BIT_할당된 Bit크기, 또는 문자 크기를 반환
 CHAR_문자의 개수를 반환
 LENGTH 할당된 바이트 수를 반환 */
 SELECT BIT_LENGTH('abc'), CHAR_LENGTH('abc'), LENGTH('abc') -- 24, 3, 3(영문 3바이트)
 SELECT BIT_LENGTH('가나다'), CHAR_LENGTH('가나다'), LENGTH('가나다') -- 72, 3, 9(한글 9바이트)
 ```
 
-```mariadb
--- CONCAT(문자열1, 문자열2, ...), CONCAT_WS(문자열1, 문자열2, ...)
+- CONCAT(문자열1, 문자열2, ...), CONCAT_WS(문자열1, 문자열2, ...)
+
+```mysql
 -- 문자열들을 이어준다. CONCAT_WS는 구분자와 함께 문자열을 이어준다.
 SELECT CONCAT_WS('/', '2022', '01', '01'); -- 2020/01/01 출력
 ```
 
-```mariadb
--- ELT(위치, 문자열1, 문자열2, ...), FIELD(찾을 문자열, 문자열1, 문자열2, ...), FIND_IN_SET(찾을 문자열, 문자열 리스트), INSTR(기준 문자열, 부분 문자열), LOCATE(부분 문자열, 기준 문자열)
+- ELT(위치, 문자열1, 문자열2, ...), FIELD(찾을 문자열, 문자열1, 문자열2, ...), FIND_IN_SET(찾을 문자열, 문자열 리스트), INSTR(기준 문자열, 부분 문자열), LOCATE(부분 문자열, 기준 문자열)
+
+```mysql
 SELECT ELT(2, '하나', '둘', '셋'); -- '둘' 출력
 SELECT FIELD('둘', '하나', '둘', '셋'); -- 2 출력
 SELECT FIND_IN_SET('둘', '하나,둘,셋'); -- 2 출력
@@ -181,152 +208,181 @@ SELECT INSTR('하나둘셋', '둘'); -- 3 출력
 SELECT LOCATE('둘', '하나둘셋'); -- 3 출력 (LOCATE와 POSITION은 동일한 함수)
 ```
 
-```mariadb
--- FORMAT(숫자, 소수점자리수)
+- FORMAT(숫자, 소수점자리수)
+
+```mysql
 SELECT FORMAT(123456.123456, 4); -- 123,456.1235 출력
 ```
 
-```mariadb
--- BIN(숫자), HEX(숫자), OCT(숫자)
+- BIN(숫자), HEX(숫자), OCT(숫자)
+
+```mysql
 SELECT BIN(31), HEX(31), OCT(31); -- 2진수 11111, 16진수 1F, 8진수 37 출력
 ```
 
-```mariadb
--- INSERT(기준 문자열, 위치, 길이, 삽입할 문자열)
+- INSERT(기준 문자열, 위치, 길이, 삽입할 문자열)
+
+```mysql
 -- 기준 문자열의 위치부터 길이만큼을 지우고, 삽입할 문자열을 끼워 넣음
 SELECT INSERT('abcdefghi', 3, 4, '@@@@'), INSERT('abcdefghi', 3, 2, '@@@@'); -- ab@@@@ghi, ab@@@@efghi 출력
 ```
 
-```mariadb
--- LEFT(문자열, 길이), RIGHT(문자열, 길이)
+- LEFT(문자열, 길이), RIGHT(문자열, 길이)
+
+```mysql
 SELECT LEFT('abcdefghi', 3), RIGHT('abcdefghi', 3); -- abc, ghi 출력
 ```
 
-```mariadb
--- UPPER(문자열), LOWER(문자열)
+- UPPER(문자열), LOWER(문자열)
+
+```mysql
 SELECT LOWER('abcdEFGH'), UPPER('abcdEFGH'); -- abcdefgh, ABCDEFGH를 출력
 -- LOWER()와 LCASE()는 동일함수. UPPER()와 UCASE()는 동일함수
 ```
 
-```mariadb
--- LPAD(문자열, 길이, 채울 문자열), RPAD(문자열, 길이, 채울 문자열)
+- LPAD(문자열, 길이, 채울 문자열), RPAD(문자열, 길이, 채울 문자열)
+
+```mysql
 -- 문자열을 길이만큼 늘린 후에 빈 곳을 채울 문자열로 채움
 SELECT LPAD('김이박', 5, '##'), RPAD('김이박', 5, '##'); -- '##김이박', '김이박##' 출력
 ```
 
-```mariadb
--- LTRIM(문자열), RTRIM(문자열)
+- LTRIM(문자열), RTRIM(문자열)
+
+```mysql
 -- 문자열 왼쪽, 오른쪽 공백을 제거. 가운데 공백은 제거하지 않음
 SELECT LTRIM('  김이박'), RTRIM('김이박  '); -- '김이박', '김이박' 출력
 ```
 
-```mariadb
--- TRIM(문자열), TRIM(방향 자를 문자열 FROM 문자열)
+- TRIM(문자열), TRIM(방향 자를 문자열 FROM 문자열)
+
+```mysql
 -- TRIM() 앞 뒤 공백을 모두 제거함. 방향: LEADING 앞쪽, BOTH 양쪽, TRAILING 뒤쪽
 SELECT TRIM('  김이박  '); -- '김이박' 출력
 SELECT TRIM(BOTH 'G' FROM 'GGG김이박GGG'); -- '김이박' 출력
 ```
 
-```mariadb
--- REPEAT(문자열, 횟수)
+- REPEAT(문자열, 횟수)
+
+```mysql
 SELECT REPEAT('김이박', 3); -- '김이박김이박김이박' 출력
 ```
 
-```mariadb
--- REPLACE(문자열, 원래 문자열, 바꿀 문자열)
+- REPLACE(문자열, 원래 문자열, 바꿀 문자열)
+
+```mysql
 SELECT REPLACE('이제는 잘 수 있겠다', '있겠다', '없겠다'); -- '이제는 잘 수 없겠다'로 변경 출력
 ```
 
-```mariadb
--- REVERSE(문자열)
+- REVERSE(문자열)
+
+```mysql
 SELECT REVERSE('김이박'); -- '박이김' 출력
 ```
 
-```mariadb
--- SPACE(길이)
+- SPACE(길이)
+
+```mysql
 SELECT CONCAT('이제는', SPACE(10), '졸립다'); -- '이제는    졸립다' 출력
 ```
 
-```mariadb
--- SUBSTRING(문자열, 시작위치, 길이) or (문자열 FROM 시작위치 FOR 길이)
+- SUBSTRING(문자열, 시작위치, 길이) or (문자열 FROM 시작위치 FOR 길이)
+
+```mysql
 -- 시작위치부터 길이만큼 문자를 반환. 길이가 생략되면 준마열 끝까지 반환
 SELECT SUBSTRING('이제그만자자', 3, 2); -- '그만' 출력
 -- SUBSTRING(), SUBSTR(), MID()는 모두 같은 함수
 ```
 
-```mariadb
--- SUBSTRING_INDEX(문자열, 구분자, 횟수)
+- SUBSTRING_INDEX(문자열, 구분자, 횟수)
+
+```mysql
 -- 문자열에서 구분자의 횟수번째 나오는 부분 뒤를 버림. 횟수가 음수면 우측부터 횟수번째 나오는 앞을 버림
 SELECT SUBSTRING_INDEX('cafe.daum.net', '.', '2'); -- cafe.daum 출력
 SELECT SUBSTRING_INDEX('cafe.daum.net', '.', '-2'); -- daum.net 출력
 ```
 
+
+
 > 수학 함수
 
-```mariadb
--- ABS(숫자)
+- ABS(숫자)
+
+```mysql
 SELECT ABS(-100); -- 절대값 100이 출력
 ```
 
-```mariadb
--- CEILING(숫자), FLOOR(숫자), ROUND(숫자)
+- CEILING(숫자), FLOOR(숫자), ROUND(숫자)
+
+```mysql
 SELECT CEILING(4.7), FLOOR(4.7), ROUND(4.7); -- 올림 5, 내림 4, 반올림 5 출력
 ```
 
-```mariadb
--- CONV(숫자, 원래진수, 변환할 진수)
+- CONV(숫자, 원래진수, 변환할 진수)
+
+```mysql
 SELECT CONV('AA', 16, 2); -- 16진수 AA를 2진수로 변환하여 10101010 출력
 SELECT CONV(100, 10, 8); -- 10진수 100을 8진수로 변환하여 144 출력
 ```
 
-```mariadb
--- DEGREES(숫자), RADIANS(숫자), PI()
+- DEGREES(숫자), RADIANS(숫자), PI()
+
+```mysql
 -- 라디안 값을 각도값으로 변환, 각도값을 라디안으로 변환, PI값인 3.141592를 반환
 SELECT DEGREES(PI()), RADIANS(180); -- 180, 3.141592 출력
 ```
 
-```mariadb
--- MOD(숫자1, 숫자2) or 숫자1 % 숫자2 or 숫자1 MOD 숫자2
+- MOD(숫자1, 숫자2) or 숫자1 % 숫자2 or 숫자1 MOD 숫자2
+
+```mysql
 -- 숫자1을 숫자2로 나눈 나머지 값을 반환
 SELECT MOD(157, 10), 157 % 10, 157 MOD 10; -- 모두 157을 10으로 나눈 나머지값인 7을 반환
 ```
 
-```mariadb
--- POW(숫자1, 숫자2), SQRT(숫자)
+- POW(숫자1, 숫자2), SQRT(숫자)
+
+```mysql
 -- 숫자1의 숫자2 만큼 제곱값 반환, 숫자의 제곱근을 반환
 SELECT POW(2, 3), SQRT(9); -- 8, 3 출력
 ```
 
-```mariadb
--- RAND()
+- RAND()
+
+```mysql
 -- 0이상 1미만의 실수를 반환. 실행할 때마다 값이 변경됨
 SELECT RAND(), FLOOR(1 + (RAND() * (7-1))); -- 0 ~ 1 실수 반환. 1 ~ 6 정수 반환
 ```
 
-```mariadb
--- SIGN(숫자)
+- SIGN(숫자)
+
+```mysql
 -- 숫자가 양수, 0, 음수 인지를 구함. 각 1, 0, -1을 반환.
 SELECT SIGN(100), SIGN(0), SIGN(-100.123); -- 1, 0, -1 출력
 ```
 
-```mariadb
--- TRUNCATE(숫자, 정수)
+- TRUNCATE(숫자, 정수)
+
+```mysql
 -- 숫자를 소수점을 기준으로 정수 위치(양수는 우측, 음수는 좌측)까지 구하고 나머지는 버린다
 SELECT TRUNCATE(12345.12345, 2), TRUNCATE(12345.12345, -2); -- 12345.123, 12300 반환
 ```
 
-날짜 및 시간 함수
 
-```mariadb
--- ADDDATE(날짜, 차이), SUBDATE(날짜, 차이)
+
+> 날짜 및 시간 함수
+
+- ADDDATE(날짜, 차이), SUBDATE(날짜, 차이)
+
+```mysql
 SELECT ADDDATE('2022-01-01', INTERVAL 31 DAY), ADDDATE('2022-01-01', INTERVAL 1 MONTH);
 -- 2022-02-01 출력
 SELECT SUBDATE('2022-01-01', INTERVAL 31 DAY), SUBDATE('2022-01-01', INTERVAL 1 MONTH);
 -- 2021-12-01 출력
 ```
 
-```mariadb
--- ADDTIME(날짜/시간, 시간), SUBTIME(날짜/시간, 시간)
+- ADDTIME(날짜/시간, 시간), SUBTIME(날짜/시간, 시간)
+
+```mysql
 -- 날짜/시간을 기준으로 시간을 더한 결과, 뺀 결과를 반환
 SELECT ADDTIME('2022-01-01 23:59:59', '1:1:1'), ADDTIME('15:00:00', '2:10:10');
 -- 2022-01-02 01:01:00, 17:10:10 출력
@@ -334,88 +390,102 @@ SELECT SUBTIME('2022-01-01 23:59:59', '1:1:1'), SUBTIME('15:00:00', '2:10:10');
 -- 2022-01-01 22:58:58, 12:49:50 출력
 ```
 
-```mariadb
-CURDATE() 현재 년-월-일, CURTIME() 현재 시:분:초, NOW()와 SYSDATE() 현재 년-월-일 시:분:초 출력
+- CURDATE() : 현재 년-월-일, CURTIME() : 현재 시:분:초, NOW()와 SYSDATE() 현재 년-월-일 시:분:초 출력
+- YEAR(날짜), MONTH(날짜), DAY(날짜), HOUR(시간), MINUTE(시간), SECOND(시간), MICROSECOND(시간) : 현재 날짜 또는 시간에서 년, 월, 일, 시, 분, 초, 밀리초를 출력
 
-YEAR(날짜), MONTH(날짜), DAY(날짜), HOUR(시간), MINUTE(시간), SECOND(시간), MICROSECOND(시간) -- (현재 날짜 또는 시간에서 년, 월, 일, 시, 분, 초, 밀리초를 출력)
-```
 
-```mariadb
--- DATE(), TIME()
+
+- DATE(), TIME()
+
+```mysql
 SELECT DATE(NOW()), TIME(NOW()) -- 현재 날짜, 시간 출력
 ```
 
-```mariadb
--- DATEDIFF(날짜, 날짜2), TIMEDIFF(날짜1or시간1, 날짜2or시간2)
+- DATEDIFF(날짜1, 날짜2), TIMEDIFF(날짜1 or 시간1, 날짜2 or 시간2)
+
+```mysql
 -- 날짜1 - 날짜2 일수 결과 반환, 시간1 - 시간2 시간 결과 반환
 SELECT DATEDIFF('2022-01-01', NOW()), TIMEDIFF('23:23:59', '12:11:10');
 ```
 
-```mariadb
--- DAYOFWEEK(날짜), MONTHNAME(), DAYOFYEAR(날짜)
+- DAYOFWEEK(날짜), MONTHNAME(), DAYOFYEAR(날짜)
+
+```mysql
 -- 현재 요일(순서), 월이름, 일년 중 몇일이 지났는지를 반환
 SELECT DAYOFWEEK(CURDATE()), MONTHNAME(CURDATE()), DAYOFYEAR(CURDATE());
 ```
 
-```mariadb
--- LAST_DAY(날짜)
+- LAST_DAY(날짜)
+
+```mysql
 -- 날짜 달의 마지막 날짜를 반환. 보통 날짜 달의 마지막 날짜를 확인할 때 사용
 SELECT LAST_DAY('2022-02-01'); -- 2022-02-28 출력
 ```
 
-```mariadb
--- MAKEDATE(연도, 정수)
+- MAKEDATE(연도, 정수)
+
+```mysql
 -- 연도에서 정수만큼 지난 날짜를 구한다
 SELECT MAKEDATE(2022, 32); -- 2022-02-01 출력
 ```
 
-```mariadb
--- MAKETIME(시, 분, 초)
+- MAKETIME(시, 분, 초)
+
+```mysql
 SELECT MAKETIME(12, 11, 10) -- 12:11:10 출력
 ```
 
-```mariadb
--- PERIOD_ADD(년월, 개월수), PERIOD_DIFF(년월1, 년월2)
+- PERIOD_ADD(년월, 개월수), PERIOD_DIFF(년월1, 년월2)
+
+```mysql
 -- 년월(YYYYMM)에서 개월수만큼 지난 년월을 구한다. 년월1 - 년월2의 개월수를 구한다.
 SELECT PERIOD_ADD(202201, 11), PERIOD_DIFF(202201, 201812); -- 202212, 37 출력
 ```
 
-```mariadb
--- QUARTER(날짜)
+- QUARTER(날짜)
+
+```mysql
 -- 몇분기인지 출력
 SELECT QUARTER('2022-07-07'); -- 3 출력
 ```
 
-```mariadb
--- TIME_TO_SEC(시간)
+- TIME_TO_SEC(시간)
+
+```mysql
 -- 시간을 초 단위로 구한다
 SELECT TIME_TO_SEC('12:11:10'); -- 43870 출력
 ```
 
-시스템 정보 함수
 
-```mariadb
--- USER(), DATABASE()
+
+> 시스템 정보 함수
+
+- USER(), DATABASE()
+
+```mysql
 SELECT CURRENT_USER(), DATABASE() -- 현재 사용자, 현재 선택된 DATABASE 출력
 ```
 
-```mariadb
--- FOUND_ROWS()
+- FOUND_ROWS()
+
+```mysql
 USE DB명; -- DB선택
 SELECT * FROM 테이블명;
 SELECT FOUND_ROWS(); -- 바로 앞의 SELECT에서 조회된 행의 개수를 구함
 ```
 
-```mariadb
--- ROW_COUNT()
+- ROW_COUNT()
+
+```mysql
 USE DB명;
 UPDATE 테이블명 SET 값이숫자인열이름=값이숫자인열이름*2;
 SELECT ROW_COUNT(); -- 바로 앞의 INSERT, UPDATE, DELETE문에서 변경된 행들의 개수를 반환. CREATE, DROP문은 0을 반환. SELECT는 -1을 반환
 ```
 
-```mariadb
--- VERSION() : 현재 DBMS의 버전을 확인
--- SLEEP(초)
+- VERSION() : 현재 DBMS의 버전을 확인
+- SLEEP(초)
+
+```mysql
 SELECT SLEEP(5);
 SELECT '5초 후에 보여요'; -- 5초 후 '5초 후에 보여요' 출력
 ```
