@@ -1,6 +1,6 @@
-### [MariaDB]  JOIN (내부 조인)
+## MariaDB JOIN (내부 조인)
 
-> #### INNER JOIN (내부 조인)
+> **INNER JOIN (내부 조인)**
 
 N:1의 관계인 테이블1:테이블2를 인용하는 조건
 
@@ -47,7 +47,7 @@ SELECT B.userID, U.주소
 
 
 
-> OUTER JOIN (외부 조인)
+> **OUTER JOIN (외부 조인)**
 
 외부 조인은 테이블1의 모든 행이 조회됨. 주문내역이 없는 개인정보테이블의 행까지 조회됨
 
@@ -64,7 +64,7 @@ SELECT *
 
 
 
-> CROSS JOIN (상호 조인)
+> **CROSS JOIN (상호 조인)**
 
 테이블1의 모든 행들을 테이블2의 모든 행들과 조인하는 기능
 
@@ -81,7 +81,7 @@ SELECT * FROM 테이블1 CROSS JOIN 테이블2;
 
 
 
-> SELF JOIN (자체 조인)
+> **SELF JOIN (자체 조인)**
 
 내부 조인을 이용해서 만들지만 별칭을 달리하여 다른 행들의 열 값을 SELECT 해서 가져옴
 
@@ -96,7 +96,7 @@ SELECT A.본인이름, A.상사이름, B.상사이름 AS '상사의 상사이름
 
 
 
-> UNION / UNION ALL
+> **UNION / UNION ALL**
 
 데이터 형식이 같은 두 테이블이 있다면 UNION시 테이블1 마지막 행 밑에 테이블2가 붙여짐
 
@@ -113,7 +113,7 @@ SELECT 열이름1, 열이름2 FROM 테이블2;
 
 
 
-> NOT IN / IN
+> **NOT IN / IN**
 
 NOT IN은 첫번째 쿼리 결과 중에서 두번째 쿼리에 해당하는 행을 제외하고 출력
 
@@ -137,9 +137,9 @@ SELECT * FROM 개인정보테이블
 
 
 
-### [MariaDB] SQL 프로그래밍
+### MariaDB - SQL 프로그래밍
 
-> #### IF ELSE
+> **IF ELSE**
 
 ```mysql
 DROP PROCEDURE IF EXISTS ifProc; -- 기존에 프로시저가 존재한다면 삭제
@@ -159,7 +159,7 @@ DELIMITER ;
 CALL ifProc(); -- 프로시저 호출하여 결과값 '100입니다.'출력
 ```
 
-* DELIMITER : C나 JAVA의 세미콜론(;), 문법의 끝을 나타내는 역할. 구문 문자를 정의하는 기능을 함
+* DELIMITER : C 나 JAVA 의 세미콜론(;), 문법의 끝을 나타내는 역할. 구문 문자를 정의하는 기능을 함
   DELIMITER 명령어 뒤에 구문 문자로 사용하고자 하는 문자를 넣어주면 됨
 
   ```mysql
@@ -188,7 +188,7 @@ CALL ifProc(); -- 프로시저 호출하여 결과값 '100입니다.'출력
 
 
 
-> #### IF ELSEIF ELSE
+> **IF ELSEIF ELSE**
 
 ```mysql
 DROP PROCEDURE IF EXISTS ifProc();
@@ -220,7 +220,7 @@ CALL ifProc();
 
 
 
-> #### CASE
+> **CASE**
 
 ```mysql
 DROP PROCEDURE IF EXISTS caseProc();
@@ -253,7 +253,7 @@ CALL caseProc();
 
 
 
-> #### WHILE
+> **WHILE**
 
 ```mysql
 DROP PROCEDURE IF EXISTS whileProc();
@@ -280,7 +280,7 @@ CALL whilProc();
 
 
 
-> #### WHILE INTERATE / LEAVE
+> **WHILE INTERATE / LEAVE**
 
 ```mysql
 DROP PROCEDURE IF EXISTS whileProc();
@@ -317,7 +317,7 @@ CALL whileProc();
 
 
 
-> #### 오류처리 (DECLARE CONTINUE HANDLER FOR 에러코드 에러시작업내역;)
+> **오류처리 (DECLARE CONTINUE HANDLER FOR 에러코드 에러시작업내역;)**
 
 ```mysql
 DROP PROCEDURE IF EXISTS errorProc();
@@ -353,7 +353,7 @@ CALL errorProc(); -- '오류발생. 롤백합니다.' 출력 및 오류 메세�
 
 
 
-> #### 동적SQL (PREPARE / EXECUTE / DEALLOCATE PREPARE)
+> **동적SQL (PREPARE / EXECUTE / DEALLOCATE PREPARE)**
 
 ```mysql
 USE DB명;
@@ -375,3 +375,4 @@ DEALLOCATE PREPARE 쿼리명; -- 쿼리명 해제
 
 SELECT * FROM 테이블명;
 ```
+
